@@ -10,9 +10,22 @@ import (
 	"famtree-api/config"
 	"famtree-api/model"
 
+	"os"
+
 	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
 )
+
+func getPort() string {
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+		log.Printf("Defaulting to port %s", port)
+	}
+	return port
+
+}
 
 // Go main function
 func main() {
@@ -34,8 +47,11 @@ func main() {
 	// router.HandleFunc("/movies/", DeleteMovies).Methods("DELETE")
 
 	// serve the app
-	fmt.Println("Server at 8000")
-	log.Fatal(http.ListenAndServe(":8000", router))
+	port := getPort()
+
+	if err := http.ListenAndServe(fmt.Sprintf(":%s", port), router); err != nil {
+		log.Fatal("Failed starting http server: ", err)
+	}
 }
 
 func GetFamilies(w http.ResponseWriter, r *http.Request) {
