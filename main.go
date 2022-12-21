@@ -7,9 +7,9 @@ import (
 	"log"
 	"net/http"
 
+	"famtree-api/auth"
 	"famtree-api/config"
 	"famtree-api/model"
-
 	"os"
 
 	"github.com/gorilla/mux"
@@ -29,13 +29,17 @@ func getPort() string {
 
 // Go main function
 func main() {
+	config.SetupAuth()
 	router := mux.NewRouter()
 
 	// Route handles & endpoints
 
 	// Get all movies
+	router.HandleFunc("/", Index).Methods("GET")
 	router.HandleFunc("/families/", GetFamilies).Methods("GET")
 	router.HandleFunc("/check-id-family/{family-id}", CheckIsFamilyIdAvailable).Methods("GET")
+	router.HandleFunc("/auth/{provider}", auth.Login).Methods("GET")
+	router.HandleFunc("/auth/{provider}/callback", auth.LoginCallback).Methods("GET")
 
 	// Create a movie
 	// router.HandleFunc("/movies/", CreateMovie).Methods("POST")
@@ -52,6 +56,10 @@ func main() {
 	if err := http.ListenAndServe(fmt.Sprintf(":%s", port), router); err != nil {
 		log.Fatal("Failed starting http server: ", err)
 	}
+}
+
+func Index(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode("Welcome to Famtree-API")
 }
 
 func GetFamilies(w http.ResponseWriter, r *http.Request) {
