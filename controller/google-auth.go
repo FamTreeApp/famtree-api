@@ -1,7 +1,8 @@
-package auth
+package controller
 
 import (
 	"encoding/json"
+	"famtree-api/model"
 	"fmt"
 	"net/http"
 
@@ -13,11 +14,12 @@ func Login(w http.ResponseWriter, r *http.Request) {
 }
 
 func LoginCallback(w http.ResponseWriter, r *http.Request) {
-
 	user, err := gothic.CompleteUserAuth(w, r)
 	if err != nil {
 		fmt.Fprintln(w, r)
 		return
 	}
-	json.NewEncoder(w).Encode(user)
+
+	var result = model.User_Account{User_Account_id: user.UserID, User_Account_name: user.Name}
+	json.NewEncoder(w).Encode(result)
 }

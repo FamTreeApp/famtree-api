@@ -1,4 +1,4 @@
-package config
+package db
 
 import (
 	"database/sql"
@@ -14,7 +14,6 @@ const (
 	DB_HOST     = "34.69.95.27"
 )
 
-// DB set up
 func SetupDB() *sql.DB {
 	dbinfo := fmt.Sprintf("host=%s user=%s password=%s dbname=%s  sslmode=disable", DB_HOST, DB_USER, DB_PASSWORD, DB_NAME)
 	db, err := sql.Open("postgres", dbinfo)

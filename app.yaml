@@ -1,5 +1,5 @@
 runtime: go119
-instance_class: F1
+instance_class: B1
 
 env_variables:
   APPENGINE_URL: https://my-open-source-project-372305.uc.r.appspot.com

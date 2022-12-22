@@ -1,6 +1,6 @@
 package model
 
 type User_Account struct {
-	google_auth_token string `json:"accountgoogleauthtoken"`
-	name              string `json:"accountname"`
+	User_Account_id   string `json:"account_id"`
+	User_Account_name string `json:"account_name"`
 }
