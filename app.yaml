@@ -4,3 +4,6 @@ instance_class: B1
 env_variables:
   APPENGINE_URL: https://my-open-source-project-372305.uc.r.appspot.com
 
+basic_scaling:
+  max_instances: 10
+  idle_timeout: 15m
